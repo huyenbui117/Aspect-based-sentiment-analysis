@@ -1,3 +1,14 @@
+class Input:
+    def __init__(self, text):
+        self.text = text
+
+
+class Output:
+    def __init__(self, labels, aspects, scores):
+        self.labels = labels
+        self.aspects = aspects
+        self.scores = scores
+
 class Model:
     def train(self, inputs, outputs):
         """
