@@ -1,3 +1,4 @@
+import pickle
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 
@@ -42,11 +43,14 @@ class PolarityLRModel(Model):
         ys = [output.scores for output in outputs]
         self.models[aspectId].fit(X, ys)
 
-    def save(self, path):
-        pass
+    def save(self, path, aspectId):
+        # save the model to disk
+        pickle.dump(self.models[aspectId], open(path, 'wb'))
 
-    def load(self, path):
-        pass
+    def load(self, path, aspectId):
+        # load the model from disk
+        model = pickle.load(open(path, 'rb'))
+        self.models[aspectId] = model
 
     def predict(self, inputs, aspectId):
         """

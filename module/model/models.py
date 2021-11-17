@@ -9,6 +9,10 @@ class Output:
         self.aspects = aspects
         self.scores = scores
 
+    def getall(self):
+        return [self.aspects, self.labels, self.scores]
+
+
 class Model:
     def train(self, inputs, outputs):
         """
