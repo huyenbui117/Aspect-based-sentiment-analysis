@@ -13,6 +13,7 @@ class Output:
         return [self.aspects, self.labels, self.scores]
 
 
+
 class Model:
     def train(self, inputs, outputs):
         """

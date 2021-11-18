@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from module.model.models import Output
 from module.model.models import Model
 
-
+aspectName = ['giá', 'dịch_vụ', 'an_toàn', 'chất_lượng', 'ship', 'chính_hãng']
 class PolarityLRModel(Model):
     def __init__(self):
         self.NUM_OF_ASPECTS = 6
@@ -62,7 +62,7 @@ class PolarityLRModel(Model):
         outputs = []
         predicts = self.models[aspectId].predict(X)
         for output in predicts:
-            label = 'aspect{}'.format(aspectId) + (' -' if output == -1 else ' +')
+            label = aspectName[aspectId] + (' -' if output == -1 else ' +')
             aspect = 'aspect{}'.format(aspectId)
             outputs.append(Output(label, aspect, output))
         return outputs
