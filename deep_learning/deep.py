@@ -338,3 +338,5 @@ def train(model_1, model_2, input_train, train_label, input_test, test_label, ba
         accuracy = correct/test_label.shape[0]/7
         useful_stuff['validation_accuracy'].append(accuracy)
     return useful_stuff
+
+print(train(model_1, model_2, input_train, train_label, input_test, test_label, batch_size, optimizer, criterion))
