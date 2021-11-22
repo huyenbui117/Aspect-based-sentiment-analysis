@@ -1,5 +1,5 @@
-import os
 import pandas as pd
+
 from module.model.lr import PolarityLRModel
 from module.preprocess import preprocess, load_data
 
@@ -9,11 +9,12 @@ input_data = [
     'data/text.csv',
 ]
 output_data = [
-    'data/predict_text.csv'
+    'data/predict_text'
 ]
 aspectName = ['giá', 'dịch_vụ', 'an_toàn', 'chất_lượng', 'ship', 'chính_hãng']
-if __name__ == '__main__':
 
+
+def run():
     model = PolarityLRModel()
     for count, f in enumerate(input_data):
         name = f.split('/')
@@ -41,6 +42,16 @@ if __name__ == '__main__':
                     if r['text'] == i.text:
                         # print(r['text'])
                         # print(predicts[count].scores)
-                        df.at[_,'aspect{}'.format(aspectId)] = predicts[count].scores
-        print(df)
-        df.to_csv(output_abs_file_path)
+                        df.at[_, 'aspect{}'.format(aspectId)] = predicts[count].scores
+
+        df.rename(columns={'Unnamed: 0': 'id',
+                           'text': 'Opinion',
+                           'aspect0': 'Price',
+                           'aspect1': 'Service',
+                           'aspect2': 'Safety',
+                           'aspect3': 'Quality',
+                           'aspect4': 'Delivery',
+                           'aspect5': 'Authenticity'
+                           }, inplace=True)
+        df.to_csv(output_abs_file_path + '.csv')
+        df.to_json(output_abs_file_path + '.json', orient='index')

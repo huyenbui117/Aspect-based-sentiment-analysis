@@ -1,3 +1,6 @@
 pandas
 sklearn	
 tensorflow
+fastapi
+uvicorn
+openpyxl

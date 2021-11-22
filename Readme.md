@@ -13,9 +13,11 @@
 - In statistics, the Chi-squared test is used to determine whether two categorical variables independent or related. In
   feature selection, the two variables are the observations of the feature and the occurrence of the class. The outcome
   of the test is a test statistic that has a chi-squared distribution and can be clarified or fail to reject the
-  assumption or null hypothesis \(H_{0}\) that the observed and expected frequencies are equal.
+  assumption or null hypothesis <img src="https://render.githubusercontent.com/render/math?math=H_{0}">that the observed
+  and expected frequencies are equal.
 
-- Given a document **D**, we estimate the <img src="https://render.githubusercontent.com/render/math?math=\chi^{2}\)">
+- Given a document <img src="https://render.githubusercontent.com/render/math?math=D">, we estimate
+  the <img src="https://render.githubusercontent.com/render/math?math=\chi^{2}\)">
   value and rank them by their score:
   <img src="https://render.githubusercontent.com/render/math?math=\chi ^{2}\sum_{t=1}\sum_{c=1}\frac{(O_{t,c}-E_{t,c})^{2}}{E_{t,c}} = N\sum_{t,c}^{}p_{t}p_{c}\left(\frac{(O_{t,c}/N)-p_{t}p_{c}}{p_{t}p_{c}}\right)^{2}">
 
@@ -55,6 +57,7 @@ LR, in its basic form, uses a logistic function (e.g., sigmoid, tanh) to model a
       either be 0 or 1.
     - <img src="https://render.githubusercontent.com/render/math?math=y^{'}">: the predicted value, which is between 0
       and 1, given features in <img src="https://render.githubusercontent.com/render/math?math=x">
+
 ## Setup
 
 Download [python 3.8.10](https://www.python.org/downloads/release/python-3810/), choose **Installer** versions, tick add
@@ -122,7 +125,16 @@ py main.py
 - Start the server:
 
 ```shell
-uvicorn main:app --reload
+uvicorn app:app --reload
 ```
 
-- Go to [localhost:8000/docs](http://localhost:8000/docs) and try to upload an image of dog or cat at /predict route
+- Go to [localhost:8000/docs](http://localhost:8000/docs), click `POST` &rarr; `Try it out` and try to upload data as
+  .`xlsx` file formatted as [text.xlsx](data/text.xlsx)
+- Click `Execute` to get results
+## Web app
+
+- Run (Program Files (x86) if window 32 bits) to disable Google Chrome CORS temporally
+
+```shell
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp
+```
