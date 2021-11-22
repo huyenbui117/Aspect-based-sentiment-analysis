@@ -1,7 +1,6 @@
 ## Aspects based sentiment analysis
 
-- [Dataset](https://www.kaggle.com/c/dogs-vs-cats/data)
-- Download and extract the dataset such that train.zip in root directory
+- [Dataset](https://github.com/phuonglt26/Vietnamese-E-commerce-Dataset)
 
 ## Setup
 Download [python 3.8.10](https://www.python.org/downloads/release/python-3810/), choose **Installer** versions, tick add PATH when download process finished
