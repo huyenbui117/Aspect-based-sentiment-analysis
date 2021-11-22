@@ -1,5 +1,5 @@
 ## Aspects based sentiment analysis
-https://www.kaggle.com/c/dogs-vs-cats
+
 - [Dataset](https://www.kaggle.com/c/dogs-vs-cats/data)
 - Download and extract the dataset such that train.zip in root directory
 
