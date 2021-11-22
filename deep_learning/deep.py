@@ -302,7 +302,7 @@ optimizer = torch.optim.Adam([{'params':model_1[0].parameters()},
                               {'params':model_2.parameters()}], lr=0.000105)
 
 #traing and testing
-def train(model_1, model_2, input_train, train_label, input_test, test_label, batch_size, optimizer, criterion, epochs = 0):
+def train(model_1, model_2, input_train, train_label, input_test, test_label, batch_size, optimizer, criterion, epochs = 10):
     useful_stuff = {'training_loss':[], 'validation_accuracy':[]}
     for epoch in range(epochs):
         num_batch = int((len(input_train)-1)/batch_size)
