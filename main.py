@@ -6,22 +6,19 @@ from module.preprocess import preprocess, load_data
 NUM_OF_ASPECTS = 6
 
 input_data = [
-    'djangoProject/data/text.csv',
+    'data/text.csv',
 ]
 output_data = [
-    'djangoProject/data/predict_text.csv'
+    'data/predict_text.csv'
 ]
 aspectName = ['giá', 'dịch_vụ', 'an_toàn', 'chất_lượng', 'ship', 'chính_hãng']
 if __name__ == '__main__':
 
-    script_path = os.path.dirname(__file__)
-    script_dir = os.path.split(script_path)[0]
     model = PolarityLRModel()
     for count, f in enumerate(input_data):
         name = f.split('/')
-        name = name[2]
-        input_abs_file_path = script_dir + '/' + f
-        output_abs_file_path = script_dir + '/' + output_data[count]
+        input_abs_file_path = f
+        output_abs_file_path = output_data[count]
 
         print(name)
         print('Running {}...'.format(f))
@@ -32,7 +29,7 @@ if __name__ == '__main__':
             print('Runnning {}...'.format(aspectId))
             inputs, outputs = load_data(input_abs_file_path, aspectId)
             inputs = preprocess(inputs)
-            file_path = script_path + '/save_model/Model_save/lr_model/{}.sav'.format(aspectName[aspectId])
+            file_path = 'save_model/Model_save/lr_model/{}.sav'.format(aspectName[aspectId])
             model.load(file_path, aspectId)
             predicts = model.predict(inputs, aspectId)
             # for count, i in enumerate(inputs):
