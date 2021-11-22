@@ -2,8 +2,8 @@ import numpy as np
 from sklearn.svm import SVC
 
 
-from module_model_models import Output
-from module_model_models import Model
+from module.model.models import Output
+from module.model.models import Model
 
 
 class PolaritySVMModel(Model):
