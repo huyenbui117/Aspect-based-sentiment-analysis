@@ -76,7 +76,8 @@ if __name__ == '__main__':
                 modelName = str(model)
                 modelName = modelName[(modelName.index(".")+1):modelName.index(" ")]
                 
-            cal_sentiment_prf(tp, fp, fn, NUM_OF_ASPECTS, verbal=True, modelName=modelNames[model_i_th])
-            # print(cal_sentiment_prf(tp, fp, fn, NUM_OF_ASPECTS, verbal=True, modelName=modelNames[model_i_th]))
+            cal_sentiment_prf(tp, fp, fn, NUM_OF_ASPECTS, verbal=True, modelName=modelNames[model_i_th], 
+                              fisrtModel = (True if model_i_th==0 else False))
+
 
 
