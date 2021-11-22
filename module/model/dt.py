@@ -1,8 +1,8 @@
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 
-from module_model_models import Output
-from module_model_models import Model
+from module.model.models import Output
+from module.model.models import Model
 
 
 class PolarityDTModel(Model):
