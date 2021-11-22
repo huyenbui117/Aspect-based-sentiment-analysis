@@ -1,5 +1,5 @@
 import fastapi
-from fastapi import Depends, FastAPI, Response, status, File, UploadFile
+from fastapi import File, UploadFile
 from fastapi.responses import FileResponse
 from main import run
 import pandas as pd

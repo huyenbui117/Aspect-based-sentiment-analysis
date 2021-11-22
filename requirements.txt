@@ -3,4 +3,4 @@ sklearn
 tensorflow
 fastapi
 uvicorn
-openpyxl
+python-multipart
