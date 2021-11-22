@@ -1,9 +1,8 @@
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 
-from module_model_models import Output
-from module_model_models import Model
-
+from module.model.models import Output
+from module.model.models import Model
 
 class PolarityRFModel(Model):
     def __init__(self):
