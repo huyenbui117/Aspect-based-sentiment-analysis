@@ -11,14 +11,19 @@ import numpy as np
 from torch import nn
 import math
 
+
 # initialize list of stop words
 def init_stop_words():
-    stop_words_string = 'bị, bởi, cả, các, cái, cần, càng, chỉ, chiếc, cho, chứ, chưa, chuyện, có, có_thể, cứ, của, cùng, cũng, đã, đang, đây, để, đến_nỗi, đều, điều, do, đó, được, dưới, gì, khi, không, là, lại, lên, lúc, mà, mỗ, một_các, nà, nên, nếu, ngay, nhiều, như, nhưng, những, nơi, nữa, phải, qua, ra, rằng, rằng, rất, rất, rồi, sau, sẽ, tại, theo, thì, trên, trước, từ, từng, và, vẫn, vào, vậy, vì, việc, với, vừa'
+    stop_words_string = 'bị, bởi, cả, các, cái, cần, càng, chỉ, chiếc, cho, chứ, chưa, chuyện, có, có_thể, cứ, ' \
+                        'của, cùng, cũng, đã, đang, đây, để, đến_nỗi, đều, điều, do, đó, được, dưới, gì, khi, ' \
+                        'không, là, lại, lên, lúc, mà, mỗ, một_các, nà, nên, nếu, ngay, nhiều, như, nhưng, những, ' \
+                        'nơi, nữa, phải, qua, ra, rằng, rằng, rất, rất, rồi, sau, sẽ, tại, theo, thì, trên, trước, ' \
+                        'từ, từng, và, vẫn, vào, vậy, vì, việc, với, vừa'
     stop_words = re.split(r'(\W|[0-9\s])+', stop_words_string)
     remove_token = re.compile(r'(\W|[0-9\s])+')
     i = 0
     while i < len(stop_words):
-        if (remove_token.fullmatch(stop_words[i]) != None):
+        if remove_token.fullmatch(stop_words[i]) is not None:
             stop_words.pop(i)
             i = i - 1
         i = i + 1
@@ -157,9 +162,9 @@ for word in list_words:
 
 for word in list_words:
     dict_word[word] = dict_word[word] + 1
-for word in dict_word.keys():
-    if word in _stop_words:
-        dict_word[word] = 0
+# for word in dict_word.keys():
+#     if word in _stop_words:
+#         dict_word[word] = 0
 # print(len(dict_word))
 sorted_keys = sorted(dict_word, key=dict_word.get)
 
@@ -274,7 +279,7 @@ optimizer = torch.optim.Adam(
 
 # traing and testing
 def train(model_1, model_2, input_train, train_label, input_test, test_label, batch_size, optimizer, criterion,
-          epochs=20):
+          epochs=3):
     useful_stuff = {'training_loss': [], 'validation_accuracy': []}
     for epoch in range(epochs):
         num_batch = int((len(input_train) - 1) / batch_size)
@@ -290,8 +295,9 @@ def train(model_1, model_2, input_train, train_label, input_test, test_label, ba
 
                 for k in range(0, y.shape[0]):
                     if abs(y[k].data - train_label[j][k].data) > 0.5:
-                        count += 1;
-                if count < 2: correct_train += 1
+                        count += 1
+                if count < 2:
+                    correct_train += 1
 
                 # if abs(y.mean().data - train_label[j].mean().data) < 0.5:
                 #     correct_train += 1
@@ -314,7 +320,7 @@ def train(model_1, model_2, input_train, train_label, input_test, test_label, ba
             count = 0.0
             for k in range(0, y.shape[0]):
                 if abs(y[k].data - test_label[i][k].data) > 0.5:
-                    correct += 1;
+                    correct += 1
             # if count < 2: correct += 1
 
             # if abs(y.mean().data - test_label[i].mean().data) < 0.5:
@@ -339,37 +345,86 @@ def predict(input):
             j = j - 1
         j = j + 1
 
-    list_seq = []
+    print(input1)
+
+    seq = []
     for word in input1:
-        if not word in dict_vocab.keys():
-            list_seq.append(dict_vocab['OOV'])
+        if not word in dict_word.keys():
+            seq.append(dict_vocab['OOV'])
+            print('No')
             continue
         if dict_word[word] > min_fre:
-            list_seq.append(dict_vocab[word])
+            seq.append(dict_vocab[word])
         else:
             if dict_word[word] < min_fre:
-                list_seq.append(dict_vocab['OOV'])
+                seq.append(dict_vocab['OOV'])
             else:
                 if word in dict_vocab.keys():
-                    list_seq.append(dict_vocab[word])
+                    seq.append(dict_vocab[word])
                 else:
-                    list_seq.append(dict_vocab['OOV'])
-    list_seq = np.array(list_seq)
-    train_pad = pad_sequences(list_seq, maxlen=max_length, padding=pad_type, truncating=trunc_type)
-    train_pad = torch.from_numpy(train_pad)
-    train_pad = embed_model(train_pad)
+                    seq.append(dict_vocab['OOV'])
+    if len(seq) == 0:
+        seq.append(0)
+    
+    
+    seq_ = []
+    seq_.append(seq)
+    seq = np.array(seq_)
+    print(seq)
+    # train_pad = pad_sequences(train_seq,maxlen=max_length, padding=pad_type, truncating=trunc_type)
+    pad = pad_sequences(seq, maxlen=max_length, padding=pad_type, truncating=trunc_type)
+    pad = torch.from_numpy(pad)
+    pad = embed_model(pad)
 
-    y = transform(input_test[i], model_1, model_2, 64, embed_dim)
+    y = transform(pad[0], model_1, model_2, 64, embed_dim)
     result = []
     for k in range(0, y.shape[0]):
-        if abs(y[k].data) > 0.5:
+        if y[k].data > 0.5:
             result.append(1)
-        else:
-            result.append(0)
+        else: 
+            if y[k].data < -0.5:
+                result.append(-1)
+            else:
+                result.append(0)
     return result
-            
-embed()
-# In[1]: print(predict("any sentence here"))
 
+text = ['Tôi rất thích sản_phẩm này', 'Tôi rất hài_lòng về sản_phẩm', 'Sản phẩm khá rẻ, chất_lượng ổn']
+dict = {'text':text}
+df = pd.DataFrame(dict)
+df.to_csv('input_test.csv')
 
+#predict for csv
+new_data = pd.read_csv('input_test.csv')
+list_text = []
+for i in range(len(new_data)):
+    list_text.append(str(new_data['text'].loc[i]))
+list_label = []
+for txt in list_text:
+    list_label.append(predict(txt))
+gia = []
+dich_vu = []
+an_toan = []
+chat_luong = []
+ship = []
+other = []
+chinh_hang = []
 
+for label in list_label:
+    gia.append(label[0])
+    dich_vu.append(label[1])
+    an_toan.append(label[2])
+    chat_luong.append(label[3])
+    ship.append(label[4])
+    other.append(label[5])
+    chinh_hang.append(label[6])
+
+predict_dict = {'text': text, 'giá': gia, 'dịch_vụ': dich_vu, 'an_toàn': an_toan, 'chất_lượng': chat_luong, 'ship': ship, 'other': other, 'chính_hãng': chinh_hang}
+pre_df = pd.DataFrame(predict_dict)
+pre_df.to_csv('output_test.csv')
+  
+  
+# Optional:            
+# embed()
+# 
+# Run in embed():
+# In[1]: print(predict("Nhận xét ở đây"))
