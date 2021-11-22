@@ -17,7 +17,7 @@ class PolarityKNModel(Model):
                     l = l.split(',')
                     _vocab.append(l)
             self.vocab.append(_vocab)
-        self.models = [KNeighborsClassifier(n_neighbors=10) for _ in range(self.NUM_OF_ASPECTS)]
+        self.models = [KNeighborsClassifier(n_neighbors=5) for _ in range(self.NUM_OF_ASPECTS)]
 
     def _represent(self, inputs, aspectId):
         """
