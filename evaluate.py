@@ -1,5 +1,6 @@
 import os
-
+import argparse
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras.models import Sequential
 
@@ -20,6 +21,9 @@ LABEL = {
 aspectName = ['giá', 'dịch_vụ', 'an_toàn', 'chất_lượng', 'ship', 'chính_hãng']
 NUM_OF_ASPECTS = 6
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--results', type=bool)
     for f in input_data:
         name = f.split('/')
         name = name[2].split('.')
@@ -55,6 +59,7 @@ if __name__ == '__main__':
             file_path = 'save_model/Model_save/lr_model/{}.sav'.format(aspectName[aspectId])
             model.save(file_path, aspectId)
 
-        # cal_sentiment_prf(tp, fp, fn, NUM_OF_ASPECTS, verbal=True)
-        cal_sentiment_prf(tp, fp, fn, NUM_OF_ASPECTS, verbal=False)
+        cal_sentiment_prf(tp, fp, fn, NUM_OF_ASPECTS, verbal=parser.parse_args())
+
+
 
