@@ -25,9 +25,7 @@ if __name__ == '__main__':
         name = name[2].split('.')
         name = name[0]
 
-        script_path = os.path.dirname(__file__)
-        script_dir = os.path.split(script_path)[0]
-        abs_file_path = script_dir + '/' + f
+        abs_file_path = f
 
         print(name)
         print('Running {}...'.format(f))
@@ -54,7 +52,7 @@ if __name__ == '__main__':
             tp.append(_tp)
             fp.append(_fp)
             fn.append(_fn)
-            file_path = script_dir + '/save_model/Model_save/lr_model/{}.sav'.format(aspectName[aspectId])
+            file_path = 'save_model/Model_save/lr_model/{}.sav'.format(aspectName[aspectId])
             model.save(file_path, aspectId)
 
         # cal_sentiment_prf(tp, fp, fn, NUM_OF_ASPECTS, verbal=True)

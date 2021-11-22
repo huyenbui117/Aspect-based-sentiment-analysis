@@ -24,9 +24,9 @@ if __name__ == '__main__':
         print('Running {}...'.format(f))
 
         df = pd.read_csv(input_abs_file_path)
-        print(df)
+        # print(df)
         for aspectId in range(NUM_OF_ASPECTS):
-            print('Runnning {}...'.format(aspectId))
+            print('Runnning {}...'.format(aspectName[aspectId]))
             inputs, outputs = load_data(input_abs_file_path, aspectId)
             inputs = preprocess(inputs)
             file_path = 'save_model/Model_save/lr_model/{}.sav'.format(aspectName[aspectId])
@@ -39,8 +39,8 @@ if __name__ == '__main__':
             for _, r in df.iterrows():
                 for count, i in enumerate(inputs):
                     if r['text'] == i.text:
-                        print(r['text'])
-                        print(predicts[count].scores)
+                        # print(r['text'])
+                        # print(predicts[count].scores)
                         df.at[_,'aspect{}'.format(aspectId)] = predicts[count].scores
         print(df)
         df.to_csv(output_abs_file_path)
