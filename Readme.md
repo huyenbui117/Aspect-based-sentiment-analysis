@@ -16,6 +16,7 @@ py -m pip install -r requirements.txt
 ```shell
 py evaluate.py 
 ```
+- Use argument `--results True` to see the evaluation results with respect to aspect in the terminal
 - Example output: 
 ```
 p: [0.9879518072289156, 0.8333333333333334, 0.9375, 0.9130434782608695, 0.9653179190751445, 1.0]
@@ -24,6 +25,11 @@ f1: [0.9820359281437125, 0.8433734939759037, 0.8823529411764706, 0.9180327868852
 micro: (0.9404096834264432, 0.933456561922366, 0.9369202226345084)
 macro: (0.9395244229830438, 0.9173937862436601, 0.9278424295819012)
 ```
+## Evaluation
+
+- Our experiments results stored in [score.csv](score.csv)
+- **For experiments only**: One can train and see all model training process by runing
+`py evaluate_allmodels.py`
 
 ## Inference
 

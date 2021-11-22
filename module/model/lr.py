@@ -13,7 +13,7 @@ class PolarityLRModel(Model):
         labelVocab = ["aspect0", "aspect1", "aspect2", "aspect3", "aspect4", "aspect5"]
         for label in labelVocab:
             _vocab = []
-            with open('C:/Users/65905/Desktop/djangoProject/data/embedding/output/label_{}_mebe_tiki'.format(label), encoding="utf-8") as f:
+            with open('data/embedding/output/label_{}_mebe_tiki'.format(label), encoding="utf-8") as f:
                 for l in f:
                     l = l.split(',')
                     _vocab.append(l)
