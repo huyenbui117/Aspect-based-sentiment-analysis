@@ -168,8 +168,8 @@ for word in list_words:
 # print(len(dict_word))
 sorted_keys = sorted(dict_word, key=dict_word.get)
 
-# initialize some parameter for padding
-vocab_size = 1000
+#initialize some parameter for padding
+vocab_size = len(dict_word) - 100
 embed_dim = 128
 max_length = 30
 trunc_type = 'post'
@@ -184,15 +184,19 @@ for i in range(len(sorted_keys) - 1, len(sorted_keys) - vocab_size, -1):
     dict_vocab[sorted_keys[i]] = index
     index = index + 1
 dict_vocab['OOV'] = index
+for i in range(0, 100):
+    print(dict_word[sorted_keys[i]])
 
 # change word in sentence to an integer value
-min_fre = dict_word[sorted_keys[len(sorted_keys) - vocab_size + 1]]
-
+min_fre = dict_word[sorted_keys[len(sorted_keys)-vocab_size]]
+print(min_fre)
+print('shop' in dict_word.keys())
 sen_to_seq_train = []
 for sen in train_text:
     list_seq = []
     for word in sen:
         if dict_word[word] > min_fre:
+            print(word)
             list_seq.append(dict_vocab[word])
         else:
             if dict_word[word] < min_fre:
@@ -217,10 +221,10 @@ for sen in test_text:
                 if dict_word[word] < min_fre:
                     list_seq.append(dict_vocab['OOV'])
                 else:
-                    if word in dict_vocab.keys():
-                        list_seq.append(dict_vocab[word])
-                    else:
-                        list_seq.append(dict_vocab['OOV'])
+                        if word in dict_vocab.keys():
+                            list_seq.append(dict_vocab[word])
+                        else:
+                            list_seq.append(dict_vocab['OOV'])
     sen_to_seq_test.append(list_seq)
 
 # padding
@@ -238,19 +242,20 @@ test_label = torch.tensor(test_label, dtype=torch.float32)
 # print(test_label.shape)
 
 # process pads into input before putting in transformer models
+#process pads into input before putting in transformer models
 
 model_1 = []
 for i in range(8):
-    model_1.append(self_transformer(input_dim=embed_dim, output_dim=64))
+    model_1.append(self_transformer(input_dim=embed_dim, output_dim = 64))
 model_2 = multi_head_transformer(input_dim=64, output_dim=embed_dim, max_length=max_length, num_class=8)
-embed_model = nn.Embedding(num_embeddings=vocab_size + 1, embedding_dim=embed_dim)
+embed_model = nn.Embedding(num_embeddings=vocab_size+1, embedding_dim=embed_dim)
 input_train = []
 for i in range(train_pad.shape[0]):
     input_train.append(embed_model(train_pad[i]))
 model_2.train()
 for p in model_1:
-    p.train()
-# print(input_train[0])
+  p.train()
+print(input_train[0])
 input_test = []
 for i in range(test_pad.shape[0]):
     input_test.append(embed_model(test_pad[i]))
@@ -259,27 +264,31 @@ position_encode = torch.zeros((max_length, embed_dim))
 for i in range(max_length):
     for j in range(embed_dim):
         if j % 2 == 1:
-            position_encode[i][j] = math.sin(float(i + 1) / 10000 ** (float(j + 1) / embed_dim))
+            position_encode[i][j] = math.sin(float(i+1)/10000**(float(j+1)/embed_dim))
         else:
-            position_encode[i][j] = math.cos(float(i + 1) / 10000 ** (float(j) / embed_dim))
+            position_encode[i][j] = math.cos(float(i+1)/10000**(float(j)/embed_dim))
 for i in range(len(input_train)):
-    input_train[i] += position_encode
+      input_train[i] += position_encode
 for i in range(len(input_test)):
-    input_test[i] += position_encode
+      input_test[i] += position_encode
 # for i in range(len(input_test)):
-#     # print(input_test[i].shape)
+#     print(input_test[i].shape)
 criterion = nn.L1Loss()
 
-optimizer = torch.optim.Adam(
-    [{'params': model_1[0].parameters()}, {'params': model_1[1].parameters()}, {'params': model_1[2].parameters()},
-     {'params': model_1[3].parameters()}, {'params': model_1[4].parameters()}, {'params': model_1[5].parameters()},
-     {'params': model_1[6].parameters()}, {'params': model_1[7].parameters()}, {'params': model_2.parameters()}],
-    lr=0.0001)
+optimizer = torch.optim.Adam([{'params':model_1[0].parameters()}, 
+                              {'params':model_1[1].parameters()}, 
+                              {'params':model_1[2].parameters()}, 
+                              {'params':model_1[3].parameters()}, 
+                              {'params':model_1[4].parameters()}, 
+                              {'params':model_1[5].parameters()}, 
+                              {'params':model_1[6].parameters()}, 
+                              {'params':model_1[7].parameters()}, 
+                              {'params':model_2.parameters()}], lr=0.000105)
 
 
 # traing and testing
 def train(model_1, model_2, input_train, train_label, input_test, test_label, batch_size, optimizer, criterion,
-          epochs=3):
+          epochs=10):
     useful_stuff = {'training_loss': [], 'validation_accuracy': []}
     for epoch in range(epochs):
         num_batch = int((len(input_train) - 1) / batch_size)
@@ -426,5 +435,5 @@ pre_df.to_csv('output_test.csv')
 # Optional:            
 # embed()
 # 
-# Run in embed():
+# Run in embed()
 # In[1]: print(predict("Nhận xét ở đây"))
