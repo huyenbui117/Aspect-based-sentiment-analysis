@@ -1,9 +1,8 @@
 import numpy as np
 from sklearn.neural_network import MLPClassifier
 
-
-from module_model_models import Output
-from module_model_models import Model
+from module.model.models import Output
+from module.model.models import Model
 
 
 class PolarityMLPModel(Model):
