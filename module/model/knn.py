@@ -1,9 +1,8 @@
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 
-
-from module_model_models import Output
-from module_model_models import Model
+from module.model.models import Output
+from module.model.models import Model
 
 
 class PolarityKNModel(Model):
