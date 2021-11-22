@@ -1,9 +1,8 @@
 import numpy as np
 from sklearn.linear_model import SGDClassifier
 
-from module_model_models import Output
-from module_model_models import Model
-
+from module.model.models import Output
+from module.model.models import Model
 
 class PolaritySGDModel(Model):
     def __init__(self):
@@ -17,7 +16,7 @@ class PolaritySGDModel(Model):
                     l = l.split(',')
                     _vocab.append(l)
             self.vocab.append(_vocab)
-        self.models = [SGDClassifier(loss="hinge", penalty="l2", max_iter=20) for _ in range(self.NUM_OF_ASPECTS)]
+        self.models = [SGDClassifier(loss="hinge", penalty="l2", max_iter=10) for _ in range(self.NUM_OF_ASPECTS)]
 
     def _represent(self, inputs, aspectId):
         """
