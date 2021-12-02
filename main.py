@@ -53,5 +53,5 @@ def run():
                            'aspect4': 'Delivery',
                            'aspect5': 'Authenticity'
                            }, inplace=True)
-        df.to_csv(output_abs_file_path + '.csv')
+        df.to_csv(output_abs_file_path + '.csv',index=False)
         df.to_json(output_abs_file_path + '.json', orient='index')

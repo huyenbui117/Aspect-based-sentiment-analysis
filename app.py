@@ -22,8 +22,8 @@ app.add_middleware(
 async def main(file: UploadFile = File(media_type='multipart', default='Any')):
     file_location = "data/text.xlsx"
     with open(file_location, "wb") as file_object:
-        file_object.write(file.file.read())
+         file_object.write(file.file.read())
     df = pd.read_excel(file_location)
     df.to_csv("data/text.csv")
     run()
-    return "data/predict_text.json"
+    return "data/predict_text.csv"
