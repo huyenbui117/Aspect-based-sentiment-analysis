@@ -55,3 +55,5 @@ def run():
                            }, inplace=True)
         df.to_csv(output_abs_file_path + '.csv',index=False)
         df.to_json(output_abs_file_path + '.json', orient='index')
+
+        df.to_excel(output_abs_file_path + '.xlsx',index=False)

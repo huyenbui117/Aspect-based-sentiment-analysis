@@ -98,7 +98,7 @@ macro: (0.9395244229830438, 0.9173937862436601, 0.9278424295819012)
 
 ## Inference
 
-- Input text in [data/text.csv](data/text.csv), check the appearance of aspects in the text by 1 or 0 in the aspect<sub>
+- Input text in [data/text.csv](text.csv), check the appearance of aspects in the text by 1 or 0 in the aspect<sub>
   i</sub> collumn
 - Note: aspect0, aspect1, aspect2, aspect3, aspect4, aspect5 are 'giá', 'dịch vụ', 'an toàn', 'chất lượng', 'ship', '
   chính hãng' respectively.
@@ -129,7 +129,7 @@ uvicorn app:app --reload
 ```
 
 - Go to [localhost:8000/docs](http://localhost:8000/docs), click `POST` &rarr; `Try it out` and try to upload data as
-  .`xlsx` file formatted as [text.xlsx](data/text.xlsx)
+  .`xlsx` file formatted as [text.xlsx](text.xlsx)
 - Click `Execute` to get results
 ## Web app
 
