@@ -132,9 +132,14 @@ uvicorn app:app --reload
   .`xlsx` file formatted as [text.xlsx](text.xlsx)
 - Click `Execute` to get results
 ## Web app
-
-- Run (Program Files (x86) if window 32 bits) to disable Google Chrome CORS temporally
+- Start the client:
 
 ```shell
-"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp
+git clone https://github.com/ivanknovank/Opinion-Mining-UI
+cd opinion-mining-ui
+yarn
+yarn dev
 ```
+
+- Go to [localhost:3000](http://localhost:3000), click `Read from CSV` upload file input formatted as [text.csv](text.csv) (Example input file)
+- Click `Results` to get model predictions
